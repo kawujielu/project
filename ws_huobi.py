@@ -172,13 +172,13 @@ class order_maker:
         size = min(self.exchange1_usdt_balance/self.ask_price_list[0]/self.price_depth, self.exchange2_btc_balance/self.price_depth, self.depth_data['tick']['asks'][0][1])*self.ratio  # A交易所usdt数量/卖一价格 = 可买BTC数量,B交易所BTC数量，A交易所卖一挂单量，3者最小值*交易比例
         # 若挂单数量小于交易所规定的最小成交量，则返回
         if size < self.exchange1_min_size or size < self.exchange2_min_size:
-            self.ask_size = 0.001
+            return
         else:
             self.ask_size = self.digits(size, self.volume_digits)
             print('卖盘挂单数量：', self.ask_size)
         size = min(self.exchange1_btc_balance/self.price_depth, self.exchange2_usdt_balance/self.new_bid_price_list[0], self.depth_data['tick']['bids'][0][1])*self.ratio
         if size < self.exchange1_min_size or size < self.exchange2_min_size:
-            self.bid_size = 0.001
+            return
         else:
             self.bid_size = self.digits(size, self.volume_digits)
             print('买盘挂单数量：', self.bid_size)
